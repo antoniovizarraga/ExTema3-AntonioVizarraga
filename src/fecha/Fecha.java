@@ -1,16 +1,41 @@
 package fecha;
 
+/**
+ * Clase que contiene diferentes métodos para manejar las fechas
+ * y usando diferentes métodos, comprueba que la fecha sea correcta,
+ * si un año es bisiesto o no... Etc.
+ * @author Antonio
+ * @version 1.0
+ */
 public class Fecha {
-	private int d; //d�a
-	private int m; //mes
-	private int a; //a�o
-
+	/**
+	 * Este atributo será el día.
+	 */
+	private int d; //d�a
 	
+	/**
+	 * Este atributo es el mes.
+	 */
+	private int m; //mes
+	
+	/**
+	 * Este atributo es el año.
+	 */
+	private int a; //a�o
+
+	/**
+	 * Este método es un constructor vacío.
+	 */
 	public Fecha() {
 
 	}
 
-	
+	/**
+	 * Método constructor que toma como parámetros el día, mes y año.
+	 * @param dia Variable que contendrá el día
+	 * @param mes Variable que contendrá el mes
+	 * @param anio Variable que contendrá el año
+	 */
 	public Fecha(int dia, int mes, int anio) {
 		this.d = dia;
 		this.m = mes;
@@ -18,7 +43,12 @@ public class Fecha {
 	}
 
 	
-	
+	/**
+	 * Función que comprueba si la fecha es correcta o no. Devolverá
+	 * un booleano indicando si lo es o no.
+	 * @return diaCorrecto && mesCorrecto && anioCorrecto Devuelve tres booleanos
+	 * indicando cuál de las tres variables son incorrectas.
+	 */
 	public boolean fechaCorrecta() {
 		boolean diaCorrecto, mesCorrecto, anioCorrecto;
 		anioCorrecto = a > 0;
@@ -42,14 +72,22 @@ public class Fecha {
 		}
 		return diaCorrecto && mesCorrecto && anioCorrecto;
 	}
-
-	// M�todo esBisiesto. Solo lo usa fechaCorrecta, por eso es privado
+	
+	/**
+	 * Función privada que sólo lo usa fechaCorrecta. Se encarga de comprobar
+	 * si un año es bisiesto o no a través de un booleano.
+	 * @return esBisiesto Devuelve un booleano diciendo si el año es bisiesto o no.
+	 */
+	// M�todo esBisiesto. Solo lo usa fechaCorrecta, por eso es privado
 	private boolean esBisiesto() {
 		boolean esBisiesto = (a % 4 == 0 && a % 100 != 0 || a % 400 == 0);
 		return esBisiesto;
 	}
-
-	// M�todo diaSiguiente
+	
+	/**
+	 * Función que añade un día más al atributo d.
+	 */
+	// M�todo diaSiguiente
 	public void diaSiguiente() {
 		d++;
 		if (!fechaCorrecta()) {
@@ -62,7 +100,12 @@ public class Fecha {
 		}
 	}
 
-	// M�todo toString
+	/**
+	 * Método que pasa la fecha a un String.
+	 * @return Dependiendo de qué atributos valgan menor que o mayor que 10,
+	 * devolverán un String u otro.
+	 */
+	// M�todo toString
 	public String toString() {
 		if (d < 10 && m < 10) {
 			return "0" + d + "-0" + m + "-" + a;
