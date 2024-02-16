@@ -8,20 +8,22 @@ package fecha;
  * @version 1.0
  */
 public class Fecha {
+	public static final int DIEZ = 10;
+
 	/**
 	 * Este atributo será el día.
 	 */
-	private int d; //d�a
+	private int diaAtributo; //d�a
 	
 	/**
 	 * Este atributo es el mes.
 	 */
-	private int m; //mes
+	private int mesAtributo; //mes
 	
 	/**
 	 * Este atributo es el año.
 	 */
-	private int a; //a�o
+	private int anioAtributo; //a�o
 
 	/**
 	 * Este método es un constructor vacío.
@@ -37,9 +39,9 @@ public class Fecha {
 	 * @param anio Variable que contendrá el año
 	 */
 	public Fecha(int dia, int mes, int anio) {
-		this.d = dia;
-		this.m = mes;
-		this.a = anio;
+		this.diaAtributo = dia;
+		this.mesAtributo = mes;
+		this.anioAtributo = anio;
 	}
 
 	
@@ -50,25 +52,28 @@ public class Fecha {
 	 * indicando cuál de las tres variables son incorrectas.
 	 */
 	public boolean fechaCorrecta() {
-		boolean diaCorrecto, mesCorrecto, anioCorrecto;
-		anioCorrecto = a > 0;
-		mesCorrecto = m >= 1 && m <= 12;
-		switch (m) {
+		boolean diaCorrecto;
+		boolean mesCorrecto;
+		boolean anioCorrecto;
+		anioCorrecto = anioAtributo > 0;
+		mesCorrecto = mesAtributo >= 1 && mesAtributo <= 12;
+		boolean diaMayor1 = diaAtributo >= 1;
+		switch (mesAtributo) {
 		case 2:
 			if (esBisiesto()) {
-				diaCorrecto = d >= 1 && d <= 29;
+				diaCorrecto = diaMayor1 && diaAtributo <= 29;
 			} else {
-				diaCorrecto = d >= 1 && d <= 28;
+				diaCorrecto = diaMayor1 && diaAtributo <= 28;
 			}
 			break;
 		case 4:
 		case 6:
 		case 9:
 		case 11:
-			diaCorrecto = d >= 1 && d <= 30;
+			diaCorrecto = diaMayor1 && diaAtributo <= 30;
 			break;
 		default:
-			diaCorrecto = d >= 1 && d <= 31;
+			diaCorrecto = diaMayor1 && diaAtributo <= 31;
 		}
 		return diaCorrecto && mesCorrecto && anioCorrecto;
 	}
@@ -80,22 +85,21 @@ public class Fecha {
 	 */
 	// M�todo esBisiesto. Solo lo usa fechaCorrecta, por eso es privado
 	private boolean esBisiesto() {
-		boolean esBisiesto = (a % 4 == 0 && a % 100 != 0 || a % 400 == 0);
-		return esBisiesto;
+		return anioAtributo % 4 == 0 && anioAtributo % 100 != 0 || anioAtributo % 400 == 0;
 	}
 	
 	/**
 	 * Función que añade un día más al atributo d.
 	 */
 	// M�todo diaSiguiente
-	public void diaSiguiente() {
-		d++;
+	public void nextDay() {
+		diaAtributo++;
 		if (!fechaCorrecta()) {
-			d = 1;
-			m++;
+			diaAtributo = 1;
+			mesAtributo++;
 			if (!fechaCorrecta()) {
-				m = 1;
-				a++;
+				mesAtributo = 1;
+				anioAtributo++;
 			}
 		}
 	}
@@ -107,15 +111,19 @@ public class Fecha {
 	 */
 	// M�todo toString
 	public String toString() {
-		if (d < 10 && m < 10) {
-			return "0" + d + "-0" + m + "-" + a;
-		} else if (d < 10 && m >= 10) {
-			return "0" + d + "-" + m + "-" + a;
-		} else if (d >= 10 && m < 10) {
-			return d + "-0" + m + "-" + a;
+		String date = "";
+		
+		if (diaAtributo < DIEZ && mesAtributo < DIEZ) {
+			date = "0" + diaAtributo + "-0" + mesAtributo + "-" + anioAtributo;
+		} else if (diaAtributo < DIEZ && mesAtributo >= DIEZ) {
+			date = "0" + diaAtributo + "-" + mesAtributo + "-" + anioAtributo;
+		} else if (diaAtributo >= DIEZ && mesAtributo < DIEZ) {
+			date = diaAtributo + "-0" + mesAtributo + "-" + anioAtributo;
 		} else {
-			return d + "-" + m + "-" + a;
+			date = diaAtributo + "-" + mesAtributo + "-" + anioAtributo;
 		}
+		
+		return date;
 	}
 
 }
